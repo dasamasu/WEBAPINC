@@ -58,12 +58,15 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend", policy =>
     {
         policy.WithOrigins(
+                // Desarrollo local
                 "http://localhost:5173", 
                 "https://localhost:5173",
                 "http://localhost:3000", 
                 "https://localhost:3000",
                 "http://127.0.0.1:5173",
-                "https://127.0.0.1:5173"
+                "https://127.0.0.1:5173",
+                // Firebase Cloud Workstations
+                "https://6000-firebase-studio-1763608514952.cluster-udxxdyopu5c7cwhhtg6mmadhvs.cloudworkstations.dev"
               )
               .AllowAnyMethod()
               .AllowAnyHeader()

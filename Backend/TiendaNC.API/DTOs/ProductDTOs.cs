@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using TiendaNC.API.Models;
 
 namespace TiendaNC.API.DTOs
 {
@@ -10,6 +11,7 @@ namespace TiendaNC.API.DTOs
         public string ImageUrl { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public string Type { get; set; } = string.Empty;
+        public ProductStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
@@ -33,6 +35,8 @@ namespace TiendaNC.API.DTOs
         [Required]
         [RegularExpression("^(Venta|Alquiler)$", ErrorMessage = "El tipo debe ser 'Venta' o 'Alquiler'")]
         public string Type { get; set; } = string.Empty;
+
+        public ProductStatus Status { get; set; } = ProductStatus.Disponible;
     }
 
     public class UpdateProductDto
@@ -54,12 +58,16 @@ namespace TiendaNC.API.DTOs
         [Required]
         [RegularExpression("^(Venta|Alquiler)$", ErrorMessage = "El tipo debe ser 'Venta' o 'Alquiler'")]
         public string Type { get; set; } = string.Empty;
+
+        [Required]
+        public ProductStatus Status { get; set; }
     }
 
     public class ProductQueryDto
     {
         public string? Search { get; set; }
         public string? Type { get; set; }
+        public ProductStatus? Status { get; set; }
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }
         public string OrderBy { get; set; } = "name";

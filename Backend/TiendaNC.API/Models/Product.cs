@@ -26,6 +26,9 @@ namespace TiendaNC.API.Models
         [StringLength(50)]
         public string Type { get; set; } = string.Empty; // "Venta" o "Alquiler"
 
+        [Required]
+        public ProductStatus Status { get; set; } = ProductStatus.Disponible;
+
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;

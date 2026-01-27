@@ -25,7 +25,10 @@ namespace TiendaNC.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProducts([FromQuery] ProductQueryDto query)
+        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ProductDto>> GetProducts([FromQuery] ProductQueryDto query)
         {
             try
             {
@@ -43,6 +46,11 @@ namespace TiendaNC.API.Controllers
                 if (!string.IsNullOrEmpty(query.Type) && query.Type != "Todos")
                 {
                     productsQuery = productsQuery.Where(p => p.Type == query.Type);
+                }
+
+                if (query.Status.HasValue)
+                {
+                    productsQuery = productsQuery.Where(p => p.Status == query.Status.Value);
                 }
 
                 if (query.MinPrice.HasValue)
@@ -78,6 +86,7 @@ namespace TiendaNC.API.Controllers
                         ImageUrl = p.ImageUrl,
                         Price = p.Price,
                         Type = p.Type,
+                        Status = p.Status,
                         CreatedAt = p.CreatedAt,
                         UpdatedAt = p.UpdatedAt
                     })
@@ -102,7 +111,7 @@ namespace TiendaNC.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetProduct(int id)
+        public async Task<ActionResult<ProductDto>> GetProduct(int id)
         {
             try
             {
@@ -120,6 +129,7 @@ namespace TiendaNC.API.Controllers
                     ImageUrl = product.ImageUrl,
                     Price = product.Price,
                     Type = product.Type,
+                    Status = product.Status,
                     CreatedAt = product.CreatedAt,
                     UpdatedAt = product.UpdatedAt
                 };
@@ -152,6 +162,7 @@ namespace TiendaNC.API.Controllers
                     ImageUrl = createProductDto.ImageUrl,
                     Price = createProductDto.Price,
                     Type = createProductDto.Type,
+                    Status = createProductDto.Status,
                     CreatedByUserId = userId,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow
@@ -168,6 +179,7 @@ namespace TiendaNC.API.Controllers
                     ImageUrl = product.ImageUrl,
                     Price = product.Price,
                     Type = product.Type,
+                    Status = product.Status,
                     CreatedAt = product.CreatedAt,
                     UpdatedAt = product.UpdatedAt
                 };
@@ -198,6 +210,7 @@ namespace TiendaNC.API.Controllers
                 product.ImageUrl = updateProductDto.ImageUrl;
                 product.Price = updateProductDto.Price;
                 product.Type = updateProductDto.Type;
+                product.Status = updateProductDto.Status;
                 product.UpdatedAt = DateTime.UtcNow;
 
                 await _unitOfWork.Products.UpdateAsync(product);
@@ -211,6 +224,7 @@ namespace TiendaNC.API.Controllers
                     ImageUrl = product.ImageUrl,
                     Price = product.Price,
                     Type = product.Type,
+                    Status = product.Status,
                     CreatedAt = product.CreatedAt,
                     UpdatedAt = product.UpdatedAt
                 };

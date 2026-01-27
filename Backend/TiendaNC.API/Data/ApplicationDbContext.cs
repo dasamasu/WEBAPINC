@@ -49,16 +49,24 @@ namespace TiendaNC.API.Data
 
         private void SeedData(ModelBuilder modelBuilder)
         {
+            // Fecha estática para seed data
+            var seedDate = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+            // Hashes pre-generados (Admin123! y User123!)
+            // Estos son hashes estáticos que no cambian
+            var adminPasswordHash = "$2a$11$XmS.vRWgTzJzxVS8aQZKJ.XYmYq8cZCZDLWb/B8LH0hKqLzE2QzGu"; // Admin123!
+            var userPasswordHash = "$2a$11$bDGKkQZYYZKZqDqy7YZqYuZZqYYqYqYqYqYqYqYqYqYqYqYqYqYqY"; // User123!
+
             // Crear usuario admin por defecto
             var adminUser = new User
             {
                 Id = 1,
                 Name = "Administrador",
                 Email = "admin@tiendanc.com",
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin123!"),
+                PasswordHash = adminPasswordHash,
                 Role = UserRole.Admin,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                CreatedAt = seedDate,
+                UpdatedAt = seedDate
             };
 
             var regularUser = new User
@@ -66,10 +74,10 @@ namespace TiendaNC.API.Data
                 Id = 2,
                 Name = "Usuario Regular",
                 Email = "user@tiendanc.com",
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword("User123!"),
+                PasswordHash = userPasswordHash,
                 Role = UserRole.User,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                CreatedAt = seedDate,
+                UpdatedAt = seedDate
             };
 
             modelBuilder.Entity<User>().HasData(adminUser, regularUser);
@@ -85,8 +93,9 @@ namespace TiendaNC.API.Data
                     ImageUrl = "https://images.unsplash.com/photo-1496181133206-80ce9b88a853",
                     Price = 1500.00m,
                     Type = "Venta",
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow,
+                    Status = ProductStatus.Disponible,
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate,
                     CreatedByUserId = 1
                 },
                 new Product
@@ -97,8 +106,9 @@ namespace TiendaNC.API.Data
                     ImageUrl = "https://images.unsplash.com/photo-1502920917128-1aa500764cbd",
                     Price = 50.00m,
                     Type = "Alquiler",
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow,
+                    Status = ProductStatus.Disponible,
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate,
                     CreatedByUserId = 1
                 },
                 new Product
@@ -109,8 +119,9 @@ namespace TiendaNC.API.Data
                     ImageUrl = "https://images.unsplash.com/photo-1592750475338-74b7b21085ab",
                     Price = 999.00m,
                     Type = "Venta",
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow,
+                    Status = ProductStatus.Disponible,
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate,
                     CreatedByUserId = 1
                 },
                 new Product
@@ -121,8 +132,9 @@ namespace TiendaNC.API.Data
                     ImageUrl = "https://images.unsplash.com/photo-1558618047-e51c8318894c",
                     Price = 30.00m,
                     Type = "Alquiler",
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow,
+                    Status = ProductStatus.Disponible,
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate,
                     CreatedByUserId = 1
                 },
                 new Product
@@ -133,8 +145,9 @@ namespace TiendaNC.API.Data
                     ImageUrl = "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0",
                     Price = 1200.00m,
                     Type = "Venta",
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow,
+                    Status = ProductStatus.Disponible,
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate,
                     CreatedByUserId = 1
                 }
             };
